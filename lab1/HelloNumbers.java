@@ -9,5 +9,4 @@ public class HelloNumbers
 			System.out.print(sum + " ");
 		}
 	}
-	
 }
