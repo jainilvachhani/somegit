@@ -10,7 +10,7 @@ public class ArrayDeque<T>{
     }
 
     private void resize(int capacity){
-        System.out.println("in reisze");
+        //System.out.println("in reisze");
         T[] a = (T[]) new Object[capacity];
         int i,j=0;
         for(i=first;i<size-1;i++){
@@ -25,10 +25,10 @@ public class ArrayDeque<T>{
         T[] b = (T[]) new Object[capacity];
         for(i=capacity/4;i<capacity/4 + size;i++){
             b[i] = a[j];
-            System.out.println(i + " " + b[i] + " " );
+            //System.out.println(i + " " + b[i] + " " );
             j++;
         }
-        System.out.println();
+        //System.out.println();
         items = b;
         first = capacity/4;
         last = capacity/4 + size;
@@ -38,7 +38,7 @@ public class ArrayDeque<T>{
         if(size==items.length){
             resize(size*2);
         }
-        System.out.println("size is  "+items.length + " last "+ last);
+        //System.out.println("size is  "+items.length + " last "+ last);
         items[last] = x;
         last = (last+1)%items.length;
         size++;
@@ -66,9 +66,9 @@ public class ArrayDeque<T>{
             return null;
         }
         usageFactor = items.length/size;
-        System.out.println("uagege fcca " + usageFactor);
+        //System.out.println("uagege fcca " + usageFactor);
         if(usageFactor>4){
-            System.out.println("in usage ");
+            //System.out.println("in usage ");
             resize(items.length/2);
         }
         T item = items[first];
@@ -82,8 +82,8 @@ public class ArrayDeque<T>{
             return null;
         }
         usageFactor = items.length/size;
-        System.out.println("uagege fcca " + usageFactor);
-        System.out.println("uagege fcca " + usageFactor);
+       // System.out.println("uagege fcca " + usageFactor);
+       // System.out.println("uagege fcca " + usageFactor);
         if(usageFactor>4){
             resize(items.length/2);
         }
@@ -109,7 +109,7 @@ public class ArrayDeque<T>{
     }
 
     public void printDeque(){
-        System.out.println("first " +first + " last "+ last + " size " +size );
+      //  System.out.println("first " +first + " last "+ last + " size " +size );
         int i,cnt=0;
         /*for(i=first+1;cnt<size;i++){
             if(i==items.length-1){
@@ -157,7 +157,7 @@ public class ArrayDeque<T>{
         return null;
     }
 
-    public static void main(String args[]){
+   /* public static void main(String args[]){
         ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
         arrayDeque.addLast(0);
 //        arrayDeque.printDeque();
@@ -183,5 +183,5 @@ public class ArrayDeque<T>{
         arrayDeque.printDeque();
         System.out.println(arrayDeque.removeFirst());
         //System.out.println(arrayDeque.removeLast());
-    }
+    }*/
 }
