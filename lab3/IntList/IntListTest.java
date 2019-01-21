@@ -32,10 +32,10 @@ public class IntListTest {
 
     @Test
     public void testReverse(){
-        IntList L = IntList.of(1,2,3);
+        IntList L = IntList.of(1,2,3,4);
         IntList reverse = IntList.reverse(L);
-        assertEquals(IntList.of(3,2,1),reverse);
-        assertEquals(IntList.of(1,2,3),L);
+        assertEquals(IntList.of(4,3,2,1),reverse);
+        assertEquals(IntList.of(1,2,3,4),L);
         assertEquals(null,null);
     }
     /**
