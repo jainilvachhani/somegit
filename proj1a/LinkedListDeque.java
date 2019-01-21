@@ -62,7 +62,7 @@ public class LinkedListDeque<Items> {
         if(index==0){
             return temp.item;
         }
-        return (index-1,temp.next);
+        return getRecursive(index-1,temp.next);
     }
 
     public Items getRecursive(int index){
