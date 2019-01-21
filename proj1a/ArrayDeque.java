@@ -1,11 +1,13 @@
 public class ArrayDeque<T>{
-    private int first = 4;
-    private int last = 4;
+    private int capacity = 8;
+    private int first = capacity/2;
+    private int last = capacity/2;
     private float usageFactor = 0;
+    private boolean changeFirst = false, changeLast = false;
     private T[] items;
     private int size;
     public ArrayDeque(){
-        items = (T[]) new Object[8];
+        items = (T[]) new Object[capacity];
         size = 0;
     }
 
@@ -32,9 +34,12 @@ public class ArrayDeque<T>{
         items = b;
         first = capacity/4;
         last = capacity/4 + size;
+        changeFirst = false;
+        changeLast = false;
     }
 
     public void addLast(T x){
+        changeLast = true;
         if(size==items.length){
             resize(size*2);
         }
@@ -45,63 +50,65 @@ public class ArrayDeque<T>{
     }
 
     public void addFirst(T x){
-
+        changeFirst = true;
         if(size==items.length){
             resize(size*2);
         }
         first--;
         if(first<0){
-            first = items.length;
+            first = items.length-1;
         }
         items[first] = x;
         size++;
     }
 
     public T removeFirst(){
-        first++;
+        if(changeFirst){
+        //    System.out.println("in here");
+            first++;
+        }
         if(first==items.length){
             first = 0;
         }
-        if(items[first]==null){
+        //System.out.println(first);
+
+        if(items[first]==null || size==0){
             return null;
         }
         usageFactor = items.length/size;
         //System.out.println("uagege fcca " + usageFactor);
-        if(usageFactor>4){
-            //System.out.println("in usage ");
+        if(usageFactor>4 && items.length>16){
+          //  System.out.println("in usage ");
             resize(items.length/2);
         }
         T item = items[first];
         items[first] = null;
         size--;
+        changeFirst = true;
         return  item;
     }
 
     public T removeLast(){
-        if(items[last]==null){
+        if(changeLast){
+            last--;
+        }
+        if(last-1==0){
+            last = items.length-1;
+        }
+        if(items[last]==null || size==0){
             return null;
         }
         usageFactor = items.length/size;
        // System.out.println("uagege fcca " + usageFactor);
        // System.out.println("uagege fcca " + usageFactor);
-        if(usageFactor>4){
+        if(usageFactor>4 && items.length>16){
             resize(items.length/2);
         }
-        if(last-1==0){
-            T item = items[items.length-1];
-            items[items.length-1] = null;
-            last = items.length;
-            size--;
-            return item;
-        }
-        else{
-            T item = items[last-1];
-            items[last] = null;
-            last--;
-            size--;
-            return item;
-        }
-
+        T item = items[last];
+        items[last] = null;
+        size--;
+        changeLast = true;
+        return item;
     }
 
     public boolean isEmpty(){
@@ -137,7 +144,7 @@ public class ArrayDeque<T>{
 
     public T get(int index){
         int i,cnt=0;
-        for(i=first+1;cnt<size;i++){
+        for(i=first;cnt<size;i++){
             if(index==0){
                 return items[i];
             }
@@ -159,29 +166,9 @@ public class ArrayDeque<T>{
 
    /* public static void main(String args[]){
         ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
-        arrayDeque.addLast(0);
-//        arrayDeque.printDeque();
+        arrayDeque.isEmpty();
         arrayDeque.addLast(1);
-  //      arrayDeque.printDeque();
-
-        arrayDeque.addLast(2);
-    //    arrayDeque.printDeque();
-
-        arrayDeque.addLast(3);
-
-      //  arrayDeque.printDeque();
-        arrayDeque.addLast(4);
-     //   arrayDeque.printDeque();
-
-        arrayDeque.addLast(5);
-      //  arrayDeque.printDeque();
-
-        arrayDeque.addLast(6);
-
-        arrayDeque.printDeque();
-        arrayDeque.addLast(7);
         arrayDeque.printDeque();
         System.out.println(arrayDeque.removeFirst());
-        //System.out.println(arrayDeque.removeLast());
     }*/
 }
