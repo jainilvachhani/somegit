@@ -55,6 +55,21 @@ public class LinkedListDeque<Items> {
         }
     }
 
+    public Items getRecursive(int index, StuffNode temp){
+        if(temp==null){
+            return null;
+        }
+        if(index==0){
+            return temp.item;
+        }
+        return (index-1,temp.next);
+    }
+
+    public Items getRecursive(int index){
+        StuffNode temp = first;
+        return getRecursive(index,temp);
+    }
+
     /** Adds x to the front of the list. */
     public void addFirst(Items x) {
         size++;
@@ -69,6 +84,9 @@ public class LinkedListDeque<Items> {
     }
 
     public Items get(int i) {
+        if(i>=size){
+            return null;
+        }
         int j;
         StuffNode temp = first;
         for(j=0;j<i;j++){
