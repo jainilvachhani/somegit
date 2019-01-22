@@ -14,11 +14,12 @@ public class ArrayDeque<T>{
 
     private void resize(int capacity){
         T a[] = (T[]) new Object[capacity];
-        int i,curr = (first+1)%items.length;
+        int i,curr = Math.floorMod(first+1,items.length);
         for(i=0;i<size;i++){
             a[i] = items[curr];
-            curr=(curr+1)%(items.length);
-        }items = a;
+            curr=Math.floorMod(curr+1,items.length);
+        }
+        items = a;
         first = items.length-1;
         last = size;
     }
@@ -28,7 +29,7 @@ public class ArrayDeque<T>{
             resize(size*2);
         }
         items[first] = x;
-        first = (first-1)%items.length;
+        first = Math.floorMod(first-1,items.length);
         size++;
     }
 
@@ -37,7 +38,7 @@ public class ArrayDeque<T>{
             resize(size*2);
         }
         items[last] = x;
-        last = (last+1)%items.length;
+        last = Math.floorMod(last+1,items.length);
         size++;
     }
 
@@ -45,7 +46,7 @@ public class ArrayDeque<T>{
         if(size==0){
             return null;
         }
-        int curr = (first+1)%items.length;
+        int curr = Math.floorMod(first+1,items.length);
         T result = items[curr];
         items[curr] = null;
         first = curr;
@@ -60,7 +61,7 @@ public class ArrayDeque<T>{
         if(size==0){
             return null;
         }
-        int curr = (last-1)%items.length;
+        int curr = Math.floorMod(last-1,items.length);
         T result = items[curr];
         items[curr] = null;
         last = curr;
@@ -79,7 +80,7 @@ public class ArrayDeque<T>{
         if(index>size || index<0){
             return null;
         }
-        return items[(first+1+index)%(items.length)];
+        return items[Math.floorMod(first+1+index,items.length)];
     }
 
     public boolean isEmpty(){
@@ -88,33 +89,33 @@ public class ArrayDeque<T>{
 
     public void printDeque(){
         int i,cnt;
-        for(i=(first+1)%items.length,cnt=0;cnt<size;i=(i+1)%items.length,cnt++){
+        for(i=Math.floorMod(first+1,items.length),cnt=0;cnt<size;i=Math.floorMod(i+1,items.length),cnt++){
             System.out.print(items[i] + " ");
         }
         System.out.println();
     }
 
-    /*
+
     public static void main(String args[]){
         ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
-        arrayDeque.addLast(0);
+        arrayDeque.addFirst(2);
         arrayDeque.printDeque();
-        arrayDeque.addLast(1);
-        arrayDeque.printDeque();
-        arrayDeque.addLast(2);
-        arrayDeque.printDeque();
-        arrayDeque.addLast(3);
+        arrayDeque.addFirst(3);
         arrayDeque.printDeque();
         arrayDeque.addLast(4);
         arrayDeque.printDeque();
-        arrayDeque.addLast(5);
-        arrayDeque.printDeque();
-        arrayDeque.addLast(6);
+        arrayDeque.addFirst(5);
         arrayDeque.printDeque();
         arrayDeque.addLast(7);
         arrayDeque.printDeque();
+        arrayDeque.addLast(8);
+        arrayDeque.printDeque();
+        arrayDeque.addFirst(9);
+        arrayDeque.printDeque();
+        arrayDeque.addFirst(10);
+        arrayDeque.printDeque();
         //System.out.println(arrayDeque.get(0));
-        System.out.println(arrayDeque.removeFirst());
-        System.out.println(arrayDeque.removeLast());
-    }*/
+        //System.out.println(arrayDeque.removeFirst());
+        //System.out.println(arrayDeque.removeLast());
+    }
 }
