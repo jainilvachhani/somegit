@@ -52,7 +52,7 @@ public class ArrayDeque<T>{
         first = curr;
         size--;
         if(items.length>16 && size<(int) items.length*0.25){
-            resize(size/2);
+            resize(items.length/2);
         }
         return result;
     }
@@ -67,7 +67,7 @@ public class ArrayDeque<T>{
         last = curr;
         size--;
         if(items.length>16 && size<(int) items.length*0.25){
-            resize(size/2);
+            resize(items.length/2);
         }
         return result;
     }
@@ -93,29 +93,5 @@ public class ArrayDeque<T>{
             System.out.print(items[i] + " ");
         }
         System.out.println();
-    }
-
-
-    public static void main(String args[]){
-        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
-        arrayDeque.addFirst(2);
-        arrayDeque.printDeque();
-        arrayDeque.addFirst(3);
-        arrayDeque.printDeque();
-        arrayDeque.addLast(4);
-        arrayDeque.printDeque();
-        arrayDeque.addFirst(5);
-        arrayDeque.printDeque();
-        arrayDeque.addLast(7);
-        arrayDeque.printDeque();
-        arrayDeque.addLast(8);
-        arrayDeque.printDeque();
-        arrayDeque.addFirst(9);
-        arrayDeque.printDeque();
-        arrayDeque.addFirst(10);
-        arrayDeque.printDeque();
-        //System.out.println(arrayDeque.get(0));
-        //System.out.println(arrayDeque.removeFirst());
-        //System.out.println(arrayDeque.removeLast());
     }
 }
