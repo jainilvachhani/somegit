@@ -1,148 +1,57 @@
 public class ArrayDeque<T>{
-    private int capacity = 8;
-    private int first = capacity/2;
-    private int last = capacity/2;
-    private float usageFactor = 0;
-    private boolean changeFirst = false, changeLast = false;
-    private T[] items;
-    private int size;
+    private int first = 0;
+    private int last = 7;
+    private T items[];
+    private int size ;
+
     public ArrayDeque(){
-        items = (T[]) new Object[capacity];
+        items = (T[]) new Object[8];
         size = 0;
     }
 
     private void resize(int capacity){
-        //System.out.println("in reisze");
-        T[] a = (T[]) new Object[capacity];
-        int i,j=0;
-        for(i=first;i<size-1;i++){
-            a[j] = items[i];
-            j++;
-        }
-        for(i=0;i<last;i++){
-            a[j] = items[i];
-            j++;
-        }
-        j=0;
-        T[] b = (T[]) new Object[capacity];
-        for(i=capacity/4;i<capacity/4 + size;i++){
-            b[i] = a[j];
-            //System.out.println(i + " " + b[i] + " " );
-            j++;
-        }
-        //System.out.println();
-        items = b;
-        first = capacity/4;
-        last = capacity/4 + size-1;
-        changeFirst = false;
-        changeLast = false;
-      //  System.out.println("false f");
-    }
-
-    public void addLast(T x){
-        //System.out.println("trye f");
-        if(size==items.length){
-            resize(size*2);
-        }
-        //System.out.println("size is  "+items.length + " last "+ last);
-        items[last] = x;
-        last = (last+1)%items.length;
-        size++;
-        changeLast = true;
-
+        int r = items.length - first;
+        int n = items.length;
+        T a[] = (T[]) new Object[capacity];
+        System.arraycopy(items,first,a,0,r);
+        System.arraycopy(items,0,a,r,first);
+        items = a;
+        first = 0;
+        last = n;
     }
 
     public void addFirst(T x){
-        if(size==items.length){
+        first = (first-1)% (items.length-1);
+        items[first] = x;
+        size++;
+        if(first==last){
             resize(size*2);
         }
+    }
 
-        if(first<0){
-            first = items.length-1;
-        }
-        items[first] = x;
-        first--;
+    public void addLast(T x){
+        last = (last+1)%(items.length-1);
+        items[last] = x;
         size++;
-        changeFirst = true;
-
+        if(first==last){
+            resize(size*2);
+        }
     }
 
     public T removeFirst(){
-        if(changeFirst){
-        //    System.out.println("in here");
-            first++;
-        }
-        if(first==items.length){
-            first = 0;
-        }
-        //System.out.println(first);
-
-        if(items[first]==null || size==0){
-            return null;
-        }
-        usageFactor = items.length/size;
-        //System.out.println("uagege fcca " + usageFactor);
-        if(usageFactor>4 && items.length>16){
-          //  System.out.println("in usage ");
-            resize(items.length/2);
-        }
-        T item = items[first];
+        T result = (T) items[first];
         items[first] = null;
+        first = (first+1)%(items.length-1);
         size--;
-        changeFirst = true;
-        return  item;
+        return result;
     }
 
     public T removeLast(){
-        //System.out.println(changeLast);
-        if(changeLast){
-            //System.out.println("here");
-            last--;
-        }
-        if(last==0){
-            last = items.length-1;
-        }
-        if(items[last]==null || size==0){
-            return null;
-        }
-        usageFactor = items.length/size;
-       // System.out.println("uagege fcca " + usageFactor);
-       // System.out.println("uagege fcca " + usageFactor);
-        if(usageFactor>4 && items.length>16){
-            resize(items.length/2);
-        }
-        T item = items[last];
+        last = (last-1)%(items.length-1);
+        T result = (T) items[last];
         items[last] = null;
         size--;
-        changeLast = true;
-        return item;
-    }
-
-    public boolean isEmpty(){
-        return size==0;
-    }
-
-    public void printDeque(){
-      //  System.out.println("first " +first + " last "+ last + " size " +size );
-        int i,cnt=0;
-        /*for(i=first+1;cnt<size;i++){
-            if(i==items.length-1){
-                break;
-            }
-            System.out.print(items[i] + " ");
-            cnt++;
-        }
-        for(i=0;i<=last && cnt<size;i++){
-            if(cnt==size-1){
-                break;
-            }
-            System.out.print(items[i] + " ");
-            cnt++;
-        }*/
-        for(i=0;i<items.length;i++){
-            System.out.print(items[i] + " ");
-        }
-        System.out.println();
+        return result;
     }
 
     public int size(){
@@ -150,35 +59,19 @@ public class ArrayDeque<T>{
     }
 
     public T get(int index){
-        int i,cnt=0;
-        for(i=first;cnt<size;i++){
-            if(index==0){
-                return items[i];
-            }
-            cnt++;
-            index--;
-            if(i==items.length-1){
-                break;
-            }
-
-        }
-        //System.out.println(index);
-        for(i=0;i<=last && cnt<size;i++){
-            if(index==0){
-                return items[i];
-            }
-            cnt++;
-            index--;
-        }
-        return null;
+        return items[(first+index)%(items.length-1)];
     }
 
-   /* public static void main(String args[]){
-        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
-        arrayDeque.addLast(0);
-        arrayDeque.size();
-        arrayDeque.addFirst(2);
+    public boolean isEmpty(){
+        return size==0;
+    }
 
-        System.out.println(arrayDeque.removeFirst());
-    }*/
+    public void printDeque(){
+        int i,j;
+        for(i=first,j=0;j<size;i = (i+1)%(items.length-1),j++){
+            System.out.print(items[i]);
+        }
+        System.out.println();
+    }
+
 }
