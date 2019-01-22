@@ -1,57 +1,73 @@
 public class ArrayDeque<T>{
-    private int first = 3;
-    private int last = 4;
+    private int first;
+    private int last;
     private T items[];
     private int size ;
 
+
     public ArrayDeque(){
         items = (T[]) new Object[8];
+        first = 3;
+        last = 4;
         size = 0;
     }
 
     private void resize(int capacity){
-        int r = items.length - first;
-        System.out.println(r+ "  r ");
-        int n = items.length;
         T a[] = (T[]) new Object[capacity];
-        System.arraycopy(items,first,a,0,r);
-        System.arraycopy(items,0,a,r,first);
-        items = a;
-        first = 0;
-        last = n;
+        int i,curr = (first+1)%items.length;
+        for(i=0;i<size;i++){
+            a[i] = items[curr];
+            curr=(curr+1)%(items.length);
+        }items = a;
+        first = items.length-1;
+        last = size;
     }
 
     public void addFirst(T x){
-        first = (first-1)% (items.length);
-        items[first] = x;
-        size++;
-        if(first==last){
+        if(size==items.length){
             resize(size*2);
         }
+        items[first] = x;
+        first = (first-1)%items.length;
+        size++;
     }
 
     public void addLast(T x){
-        items[last] = x;
-        last = (last+1)%(items.length);
-        size++;
-        if(first==last){
+        if(size==items.length){
             resize(size*2);
         }
+        items[last] = x;
+        last = (last+1)%items.length;
+        size++;
     }
 
     public T removeFirst(){
-        first = (first+1)%(items.length);
-        T result = (T) items[first];
-        items[first] = null;
+        if(size==0){
+            return null;
+        }
+        int curr = (first+1)%items.length;
+        T result = items[curr];
+        items[curr] = null;
+        first = curr;
         size--;
+        if(items.length>16 && size<(int) items.length*0.25){
+            resize(size/2);
+        }
         return result;
     }
 
     public T removeLast(){
-        last = (last-1)%(items.length);
-        T result = (T) items[last];
-        items[last] = null;
+        if(size==0){
+            return null;
+        }
+        int curr = (last-1)%items.length;
+        T result = items[curr];
+        items[curr] = null;
+        last = curr;
         size--;
+        if(items.length>16 && size<(int) items.length*0.25){
+            resize(size/2);
+        }
         return result;
     }
 
@@ -60,6 +76,9 @@ public class ArrayDeque<T>{
     }
 
     public T get(int index){
+        if(index>size || index<0){
+            return null;
+        }
         return items[(first+1+index)%(items.length)];
     }
 
@@ -68,16 +87,14 @@ public class ArrayDeque<T>{
     }
 
     public void printDeque(){
-        int i,j;
-        /*for(i=first,j=0;j<size;i = (i+1)%(items.length-1),j++){
-            System.out.print(items[i]);
-        }*/
-        for(i=0;i<items.length;i++){
+        int i,cnt;
+        for(i=(first+1)%items.length,cnt=0;cnt<size;i=(i+1)%items.length,cnt++){
             System.out.print(items[i] + " ");
         }
         System.out.println();
     }
 
+    /*
     public static void main(String args[]){
         ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
         arrayDeque.addLast(0);
@@ -99,5 +116,5 @@ public class ArrayDeque<T>{
         //System.out.println(arrayDeque.get(0));
         System.out.println(arrayDeque.removeFirst());
         System.out.println(arrayDeque.removeLast());
-    }
+    }*/
 }
