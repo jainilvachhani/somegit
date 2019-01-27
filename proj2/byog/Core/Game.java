@@ -5,7 +5,7 @@ import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
 import java.util.Random;
-import java.util.TooManyListenersException;
+
 
 public class Game {
     TERenderer ter = new TERenderer();
@@ -36,8 +36,6 @@ public class Game {
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
 
-        TERenderer ter = new TERenderer();
-        ter.initialize(WIDTH, HEIGHT);
         Random RANDOM = new Random();
         TETile[][] world = new TETile[WIDTH][HEIGHT];
         int maxTunnel =  RANDOM.nextInt(10) + 30;
@@ -89,14 +87,14 @@ public class Game {
                 }
             }
         }
-        ter.renderFrame(world);
-        //TETile[][] finalWorldFrame = null;
+        while(true){
+            int x = RANDOM.nextInt(WIDTH),y = RANDOM.nextInt(HEIGHT);
+            if(world[x][y].equals(Tileset.FLOOR)){
+                world[x][y] = Tileset.LOCKED_DOOR;
+                break;
+            }
+        }
         return world;
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.playWithInputString("sads");
     }
 }
 
