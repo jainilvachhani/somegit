@@ -35,8 +35,9 @@ public class Game {
         // TODO: Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
-
-        Random RANDOM = new Random();
+        String number = input.substring(1,input.length()-1);
+        long seed = Long.parseLong(number);
+        Random RANDOM = new Random(seed);
         TETile[][] world = new TETile[WIDTH][HEIGHT];
         int maxTunnel =  RANDOM.nextInt(10) + 30;
         int maxLength = 20;
