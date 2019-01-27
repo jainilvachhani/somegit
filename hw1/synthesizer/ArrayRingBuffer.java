@@ -12,6 +12,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T>{
     /* Array for storing the buffer data. */
     private T[] rb;
 
+    // TODO: When you get to part 5, implement the needed code to support iteration.
     private class KeyIterator<T> implements Iterator<T>{
         private int ptr;
         public KeyIterator(){
@@ -19,7 +20,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T>{
         }
 
         public boolean hasNext(){
-            return ptr!=capacity;
+            return ptr!=capacity();
         }
 
         public T next(){
@@ -76,7 +77,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T>{
             throw new RuntimeException("Ring Buffer Underflow");
         }
         T x = rb[first];
-        first = Math.floorMod((first-1),capacity);
+        first = Math.floorMod((first+1),capacity);
         fillCount--;
         return x;
     }
@@ -86,9 +87,10 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T>{
      */
     public T peek() {
         // TODO: Return the first item. None of your instance variables should change.
+        if(this.fillCount==0){
+            throw new RuntimeException("Ring Buffer Underflow");
+        }
         T x  = rb[first];
         return x;
     }
-
-    // TODO: When you get to part 5, implement the needed code to support iteration.
 }
