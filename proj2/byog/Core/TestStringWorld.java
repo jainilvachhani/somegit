@@ -1,5 +1,6 @@
 package byog.Core;
 
+import byog.TileEngine.TETile;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -8,6 +9,9 @@ public class TestStringWorld {
 
     @Test
     public void testStringWorld(){
-        assertEquals(game.playWithInputString("N543SWWWWAA"),game.playWithInputString("N543SWWWWAA"));
+        TETile[][] world  = game.playWithInputString("n7286647390967289332swdwwdwssdsasd");
+        TETile[][] world2 = game.playWithInputString("n7286647390967289332swdwwdwssdsas:q");
+        world2 = game.playWithInputString("ld");
+        assertEquals(world,world2);
     }
 }

@@ -126,7 +126,7 @@ public class Game implements Serializable{
             prevTile = world[playerPosX][playerPosY];
             world[playerPosX][playerPosY] = Tileset.PLAYER;
         }
-        else if(moment.equals("d")){
+        else if(moment.equals("d") && playerPosX<WIDTH-1 && world[playerPosX][playerPosY-1].equals(Tileset.FLOOR)){
             toQuit = false;
             world[playerPosX][playerPosY] = prev;
             playerPosX++;
@@ -275,6 +275,7 @@ public class Game implements Serializable{
             playerMoment(world,Character.toString(input.charAt(i)).toLowerCase(),prevTile);
             i++;
         }
+        saveAndQuit(world);
         return world;
     }
 
