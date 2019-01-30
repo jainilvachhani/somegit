@@ -272,7 +272,7 @@ public class Game implements Serializable{
         int maxLength = 20;
         TETile[][] world = generateWorld(RANDOM,maxTunnel,maxLength);
         while(i!=input.length()){
-            playerMoment(world,Character.toString(input.charAt(i)),prevTile);
+            playerMoment(world,Character.toString(input.charAt(i)).toLowerCase(),prevTile);
             i++;
         }
         return world;
