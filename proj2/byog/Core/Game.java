@@ -100,7 +100,7 @@ public class Game implements Serializable{
                 if(world[i][j].equals(Tileset.PLAYER)){
                     playerPosX = i;
                     playerPosY = j;
-                    prevTile = world[i][j];
+                    prevTile = Tileset.FLOOR;
                     break;
                 }
             }
@@ -256,21 +256,25 @@ public class Game implements Serializable{
         // TODO: Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
-        int i;
+        int i=1;
+        TETile[][] world;
         if(input.charAt(0) == 'l' || input.charAt(0) == 'L'){
-            return load();
+            world = load();
         }
-        for(i=1;i<input.length();i++){
-            if(Character.toString(input.charAt(i)).equals("s") || Character.toString(input.charAt(i)).equals("S")){
-                break;
+        else{
+            for(i=1;i<input.length();i++){
+                if(Character.toString(input.charAt(i)).equals("s") || Character.toString(input.charAt(i)).equals("S")){
+                    break;
+                }
             }
+            String number = input.substring(1,i).toLowerCase();
+            long seed = Long.parseLong(number);
+            Random RANDOM = new Random(seed);
+            int maxTunnel =  RANDOM.nextInt(10) + 30;
+            int maxLength = 20;
+            world = generateWorld(RANDOM,maxTunnel,maxLength);
         }
-        String number = input.substring(1,i).toLowerCase();
-        long seed = Long.parseLong(number);
-        Random RANDOM = new Random(seed);
-        int maxTunnel =  RANDOM.nextInt(10) + 30;
-        int maxLength = 20;
-        TETile[][] world = generateWorld(RANDOM,maxTunnel,maxLength);
+
         while(i!=input.length()){
             playerMoment(world,Character.toString(input.charAt(i)).toLowerCase(),prevTile);
             i++;
@@ -347,7 +351,6 @@ public class Game implements Serializable{
         while(true){
             int x = RANDOM.nextInt(WIDTH),y = RANDOM.nextInt(HEIGHT);
             if(world[x][y].equals(Tileset.FLOOR)){
-                System.out.println("player " +x + y);
                 playerPosX = x;
                 playerPosY = y;
                 prevTile = world[x][y];

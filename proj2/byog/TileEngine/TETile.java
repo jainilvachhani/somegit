@@ -172,6 +172,27 @@ public class TETile implements Serializable {
     }
 
     /**
+     * Converts the given 2D array to a String. Handy for debugging.
+     * Note that since y = 0 is actually the bottom of your world when
+     * drawn using the tile rendering engine, this print method has to
+     * print in what might seem like backwards order (so that the 0th
+     * row gets printed last).
+     *
+     * @param world the 2D world to print
+     * @return string representation of the world
+     */
+    @Override
+    public String toString() {
+        return "TETile{" +
+                "character=" + character +
+                ", textColor=" + textColor +
+                ", backgroundColor=" + backgroundColor +
+                ", description='" + description + '\'' +
+                ", filepath='" + filepath + '\'' +
+                '}';
+    }
+
+    /**
      * Makes a copy of the given 2D tile array.
      * @param tiles the 2D array to copy
      **/
