@@ -329,35 +329,32 @@ public class Game implements Serializable{
             }
         }
 
-        int x = RANDOM.nextInt(WIDTH),y = RANDOM.nextInt(HEIGHT);
+        /*int x = RANDOM.nextInt(WIDTH),y = RANDOM.nextInt(HEIGHT);
         world[x][y] = Tileset.LOCKED_DOOR;
         x = RANDOM.nextInt(WIDTH);
         y = RANDOM.nextInt(HEIGHT);
         playerPosX = x;
         playerPosY = y;
         prevTile = world[x][y];
-        world[x][y] = Tileset.PLAYER;
-        /*while(true){
+        world[x][y] = Tileset.PLAYER;*/
+        while(true){
             int x = RANDOM.nextInt(WIDTH),y = RANDOM.nextInt(HEIGHT);
-            if(world[x][y].equals(Tileset.FLOOR) && (x<WIDTH-1 && world[x+1][y].equals(Tileset.FLOOR)) &&
-                    (y<HEIGHT-1 && world[x][y+1].equals(Tileset.FLOOR)) && (y>0 && world[x][y-1].equals(Tileset.FLOOR))
-                    && (x>0 && world[x-1][y].equals(Tileset.FLOOR))){
+            if(world[x][y].equals(Tileset.FLOOR)){
                 world[x][y] = Tileset.LOCKED_DOOR;
                 break;
             }
-        }*/
-        /*while(true){
+        }
+        while(true){
             int x = RANDOM.nextInt(WIDTH),y = RANDOM.nextInt(HEIGHT);
-            if(world[x][y].equals(Tileset.FLOOR) && (x<WIDTH-1 && world[x+1][y].equals(Tileset.FLOOR)) &&
-                    (y<HEIGHT-1 && world[x][y+1].equals(Tileset.FLOOR)) && (y>0 && world[x][y-1].equals(Tileset.FLOOR))
-                    && (x>0 && world[x-1][y].equals(Tileset.FLOOR))){
+            if(world[x][y].equals(Tileset.FLOOR)){
+                System.out.println("player " +x + y);
                 playerPosX = x;
                 playerPosY = y;
                 prevTile = world[x][y];
                 world[x][y] = Tileset.PLAYER;
                 break;
             }
-        }*/
+        }
         return world;
     }
 
