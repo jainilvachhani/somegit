@@ -28,8 +28,8 @@ public class PercolationStats {
         }
         mean = StdStats.mean(numberOfOpenSites);
         stdDev = StdStats.stddev(numberOfOpenSites);
-        confidenceLow = mean - ((1.96* Math.sqrt(stdDev))/(Math.sqrt(T)));
-        confidenceHigh = mean + ((1.96* Math.sqrt(stdDev))/(Math.sqrt(T)));
+        confidenceLow = mean - ((1.96* (stdDev))/(Math.sqrt(T)));
+        confidenceHigh = mean + ((1.96*(stdDev))/(Math.sqrt(T)));
     }
 
     public double mean(){
