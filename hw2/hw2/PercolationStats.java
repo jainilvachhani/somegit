@@ -24,7 +24,7 @@ public class PercolationStats {
                 percolation.open(StdRandom.uniform(N),StdRandom.uniform(N));
             }
             cnt += percolation.numberOfOpenSites();
-            numberOfOpenSites[i] = percolation.numberOfOpenSites()/(N*N);
+            numberOfOpenSites[i] = (double) percolation.numberOfOpenSites()/(double) (N*N);
         }
         mean = StdStats.mean(numberOfOpenSites);
         stdDev = StdStats.stddev(numberOfOpenSites);
