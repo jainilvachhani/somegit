@@ -4,11 +4,11 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 
-    boolean[][] grid;
+    private boolean[][] grid;
     private int top;
     private int bottom;
-    int totalOpenSites;
-    WeightedQuickUnionUF weightedQuickUnionUF;
+    private int totalOpenSites;
+    private WeightedQuickUnionUF weightedQuickUnionUF;
 
     private int xyTo1D(int r, int c, int n){
         return  r*n + c;
@@ -33,6 +33,9 @@ public class Percolation {
     }
 
     public void open(int r, int c){
+        if(isOpen(r,c)){
+            return;
+        }
         grid[r][c] = true;
         if(r-1>=0 && grid[r-1][c]){
             weightedQuickUnionUF.union(xyTo1D(r-1,c,grid.length),xyTo1D(r,c,grid.length));
@@ -62,7 +65,7 @@ public class Percolation {
     }
 
     public boolean isFull(int r, int c){
-        return weightedQuickUnionUF.connected(xyTo1D(r,c,grid.length),bottom);
+        return weightedQuickUnionUF.connected(xyTo1D(r,c,grid.length),top);
     }
 
     public int numberOfOpenSites(){

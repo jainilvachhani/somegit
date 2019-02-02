@@ -5,12 +5,12 @@ import edu.princeton.cs.introcs.StdStats;
 
 public class PercolationStats {
 
-    public double cnt;
-    public double mean;
-    public double stdDev;
-    public double confidenceLow;
-    public double confidenceHigh;
-    int[] numberOfOpenSites;
+    private double cnt;
+    private double mean;
+    private double stdDev;
+    private double confidenceLow;
+    private double confidenceHigh;
+    private int[] numberOfOpenSites;
 
     public PercolationStats(int N, int T, PercolationFactory pf){
         if(N<=0 || T<=0){
@@ -28,8 +28,8 @@ public class PercolationStats {
         }
         mean = StdStats.mean(numberOfOpenSites);
         stdDev = StdStats.stddev(numberOfOpenSites);
-        confidenceLow = mean - (1.96* stdDev)/(Math.sqrt(T));
-        confidenceHigh = mean + (1.96* stdDev)/(Math.sqrt(T));
+        confidenceLow = mean - ((1.96* stdDev)/(Math.sqrt(T)));
+        confidenceHigh = mean + ((1.96* stdDev)/(Math.sqrt(T)));
     }
 
     public double mean(){
