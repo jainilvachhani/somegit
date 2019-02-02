@@ -8,6 +8,7 @@ public class Percolation {
     private int top;
     private int bottom;
     private int totalOpenSites;
+    private boolean isPerculated;
     private WeightedQuickUnionUF weightedQuickUnionUF;
 
     private int xyTo1D(int r, int c, int n){
@@ -30,6 +31,7 @@ public class Percolation {
         top = n*n;
         bottom = n*n+1;
         totalOpenSites = 0;
+        isPerculated = false;
     }
 
     public void open(int r, int c){
@@ -37,6 +39,10 @@ public class Percolation {
             return;
         }
         grid[r][c] = true;
+        totalOpenSites++;
+        if(isPerculated){
+            return;
+        }
         if(r-1>=0 && grid[r-1][c]){
             weightedQuickUnionUF.union(xyTo1D(r-1,c,grid.length),xyTo1D(r,c,grid.length));
         }
@@ -57,7 +63,7 @@ public class Percolation {
         if(r==grid.length-1){
             weightedQuickUnionUF.union(xyTo1D(r,c,grid.length),bottom);
         }
-        totalOpenSites++;
+
     }
 
     public boolean isOpen(int r, int c){
@@ -73,7 +79,10 @@ public class Percolation {
     }
 
     public boolean percolates(){
-        return weightedQuickUnionUF.connected(top,bottom);
+        if(weightedQuickUnionUF.connected(top,bottom)){
+            isPerculated = true;
+        }
+        return isPerculated;
     }
 
     public static void main(String args[]){

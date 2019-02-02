@@ -10,26 +10,26 @@ public class PercolationStats {
     private double stdDev;
     private double confidenceLow;
     private double confidenceHigh;
-    private int[] numberOfOpenSites;
+    private double[] numberOfOpenSites;
 
     public PercolationStats(int N, int T, PercolationFactory pf){
         if(N<=0 || T<=0){
             throw new IllegalArgumentException();
         }
         int i;
-        numberOfOpenSites = new int[T];
+        numberOfOpenSites = new double[T];
         for(i=0;i<T;i++){
             Percolation percolation = pf.make(N);
             while (!percolation.percolates()){
                 percolation.open(StdRandom.uniform(N),StdRandom.uniform(N));
             }
             cnt += percolation.numberOfOpenSites();
-            numberOfOpenSites[i] = percolation.numberOfOpenSites();
+            numberOfOpenSites[i] = percolation.numberOfOpenSites()/(N*N);
         }
         mean = StdStats.mean(numberOfOpenSites);
         stdDev = StdStats.stddev(numberOfOpenSites);
-        confidenceLow = mean - ((1.96* stdDev)/(Math.sqrt(T)));
-        confidenceHigh = mean + ((1.96* stdDev)/(Math.sqrt(T)));
+        confidenceLow = mean - ((1.96* Math.sqrt(stdDev))/(Math.sqrt(T)));
+        confidenceHigh = mean + ((1.96* Math.sqrt(stdDev))/(Math.sqrt(T)));
     }
 
     public double mean(){
