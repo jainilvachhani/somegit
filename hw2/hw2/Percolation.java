@@ -33,7 +33,7 @@ public class Percolation {
     }
 
     public void open(int r, int c){
-        if(isOpen(r,c)){
+        if(grid[r][c]){
             return;
         }
         grid[r][c] = true;
@@ -51,10 +51,10 @@ public class Percolation {
 
             weightedQuickUnionUF.union(xyTo1D(r,c+1,grid.length),xyTo1D(r,c,grid.length));
         }
-        if(r==grid.length-1){
+        if(r==0){
             weightedQuickUnionUF.union(xyTo1D(r,c,grid.length),top);
         }
-        if(r==0){
+        if(r==grid.length-1){
             weightedQuickUnionUF.union(xyTo1D(r,c,grid.length),bottom);
         }
         totalOpenSites++;
