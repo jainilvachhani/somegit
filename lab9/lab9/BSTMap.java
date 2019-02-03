@@ -1,5 +1,6 @@
 package lab9;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -22,8 +23,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         private Node(K k, V v) {
             key = k;
             value = v;
+
         }
     }
+    private Set<K> set;
 
     private Node root;  /* Root node of the tree. */
     private int size; /* The number of key-value pairs in the tree */
@@ -31,6 +34,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     /* Creates an empty BSTMap. */
     public BSTMap() {
         this.clear();
+        set = new HashSet<>();
     }
 
     /* Removes all of the mappings from this map. */
@@ -98,6 +102,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if(key == null){
             throw new IllegalArgumentException();
         }
+        set.add(key);
         root = putHelper(key,value,root);
     }
 
@@ -119,27 +124,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     /* Returns a Set view of the keys contained in this map. */
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
-    }
-
-    private Node getNode(Node n, K key, V value){
-        int cmp = key.compareTo(n.key);
-        if(cmp < 0){
-            return getNode(n.left,key,value);
-        }
-        else if(cmp > 0){
-            return getNode(n.right,key,value);
-        }
-        else {
-            return n;
-        }
-    }
-
-    private Node getMaxNode(Node p){
-        if(p.right == null){
-            return p;
-        }
-        return getMaxNode(p.right);
+        return set;
     }
 
     /** Removes KEY from the tree if present
@@ -148,26 +133,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public V remove(K key) {
-        V value = get(key);
-        if(value==null){
-            return null;
-        }
-        Node toDelete = getNode(root,key,value);
-        if(sizeHelper(toDelete)==0){
-            toDelete = null;
-        }
-        else if(sizeHelper(toDelete)==1){
-            if(toDelete.left!=null){
-                toDelete = toDelete.left;
-            }
-            else{
-                toDelete = toDelete.right;
-            }
-        }
-        else{
-            toDelete = getMaxNode(toDelete.left);
-        }
-        return value;
+        throw new UnsupportedOperationException();
     }
 
     /** Removes the key-value entry for the specified key only if it is
@@ -176,22 +142,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      **/
     @Override
     public V remove(K key, V value) {
-        Node toDelete = getNode(root,key,value);
-        if(sizeHelper(toDelete)==0){
-            toDelete = null;
-        }
-        else if(sizeHelper(toDelete)==1){
-            if(toDelete.left!=null){
-                toDelete = toDelete.left;
-            }
-            else{
-                toDelete = toDelete.right;
-            }
-        }
-        else{
-            toDelete = getMaxNode(toDelete.left);
-        }
-        return value;
+        throw new UnsupportedOperationException();
+
     }
 
     @Override
