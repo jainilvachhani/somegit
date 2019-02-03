@@ -1,8 +1,5 @@
 package lab9;
 
-import com.sun.org.apache.regexp.internal.RE;
-import javafx.scene.chart.ValueAxis;
-
 import java.util.Iterator;
 import java.util.Set;
 
