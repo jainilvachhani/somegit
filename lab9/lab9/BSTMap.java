@@ -125,13 +125,52 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         throw new UnsupportedOperationException();
     }
 
+    private Node getNode(Node n, K key, V value){
+        int cmp = key.compareTo(n.key);
+        if(cmp < 0){
+            return getNode(n.left,key,value);
+        }
+        else if(cmp > 0){
+            return getNode(n.right,key,value);
+        }
+        else {
+            return n;
+        }
+    }
+
+    private Node getMaxNode(Node p){
+        if(p.right == null){
+            return p;
+        }
+        return getMaxNode(p.right);
+    }
+
     /** Removes KEY from the tree if present
      *  returns VALUE removed,
      *  null on failed removal.
      */
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        V value = get(key);
+        if(value==null){
+            return null;
+        }
+        Node toDelete = getNode(root,key,value);
+        if(sizeHelper(toDelete)==0){
+            toDelete = null;
+        }
+        else if(sizeHelper(toDelete)==1){
+            if(toDelete.left!=null){
+                toDelete = toDelete.left;
+            }
+            else{
+                toDelete = toDelete.right;
+            }
+        }
+        else{
+            toDelete = getMaxNode(toDelete.left);
+        }
+        return value;
     }
 
     /** Removes the key-value entry for the specified key only if it is
@@ -140,7 +179,22 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      **/
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        Node toDelete = getNode(root,key,value);
+        if(sizeHelper(toDelete)==0){
+            toDelete = null;
+        }
+        else if(sizeHelper(toDelete)==1){
+            if(toDelete.left!=null){
+                toDelete = toDelete.left;
+            }
+            else{
+                toDelete = toDelete.right;
+            }
+        }
+        else{
+            toDelete = getMaxNode(toDelete.left);
+        }
+        return value;
     }
 
     @Override
