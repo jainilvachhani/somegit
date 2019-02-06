@@ -133,31 +133,22 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     private void sink(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
-        while(index*2 <= size){
-            if(contents[index].priority() > contents[index*2].priority()
-                    && (size>=index*2+1 && contents[index].priority() > contents[index*2+1].priority())){
-                int changeIndex;
-                if(contents[index*2].priority() > contents[index*2 +1].priority()){
-                    changeIndex = index*2+1;
-                }
-                else{
-                    changeIndex = index*2;
-                }
-                swap(index,changeIndex);
-                index = changeIndex;
-            }
-            else if(contents[index].priority() > contents[index*2].priority()){
-                swap(index,index*2);
-                index = index*2;
-            }
-            else if(size>=index*2+1 && contents[index].priority() > contents[index*2+1].priority()){
-                swap(index,index*2+1);
-                index = index*2+1;
-            }
-            else{
-                break;
-            }
-
+        int left = leftIndex(index);
+        int right = rightIndex(index);
+        int leftSmall = min(index, left);
+        int rightSmall = min(index, right);
+        if (rightSmall != index && leftSmall == index) {
+            swap(index, right);
+            sink(right);
+        }
+        if(leftSmall != index && rightSmall==index){
+            swap(index,left);
+            sink(left);
+        }
+        if(leftSmall != index && rightSmall != index){
+            int smallerChild = min(left,right);
+            swap(index,smallerChild);
+            sink(smallerChild);
         }
     }
 
@@ -200,7 +191,6 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     public T removeMin() {
         T t = contents[1].item();
         swap(1,size);
-        contents[size+1] = null;
         size--;
         sink(1);
         return t;
