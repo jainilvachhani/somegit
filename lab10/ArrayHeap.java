@@ -120,25 +120,15 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     /**
      * Bubbles down the node currently at the given index.
      */
-    private void sink(int index) {
+    private void sink(int k) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
-        validateSinkSwimArg(index);
-        int left = leftIndex(index);
-        int right = rightIndex(index);
-        int leftSmall = min(index, left);
-        int rightSmall = min(index, right);
-        if (rightSmall != index && leftSmall == index) {
-            swap(index, right);
-            sink(right);
-        }
-        if(leftSmall != index && rightSmall==index){
-            swap(index,left);
-            sink(left);
-        }
-        if(leftSmall != index && rightSmall != index){
-            int smallerChild = min(left,right);
-            swap(index,smallerChild);
-            sink(smallerChild);
+        validateSinkSwimArg(k);
+        while (2*k <= size) {
+            int j = 2*k;
+            if (j < size && greater(j, j+1)) j++;
+            if (!greater(k, j)) break;
+            swap(k, j);
+            k = j;
         }
     }
 
