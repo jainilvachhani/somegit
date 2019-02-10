@@ -53,7 +53,7 @@ public class Solver {
         return solution;
     }
 
-    public void iterate(){
+    private void iterate(){
         while(!minPQ.min().getWorldState().isGoal()){
             SNode w = minPQ.delMin();
             for(WorldState u : w.getWorldState().neighbors()){

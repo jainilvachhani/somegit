@@ -3,6 +3,7 @@ package hw4.puzzle;
 import edu.princeton.cs.algs4.Queue;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Board implements WorldState {
 
@@ -95,8 +96,11 @@ public class Board implements WorldState {
 
     public int manhattan(){
         int i,cnt=0;
-        for(i=0;i<N*N-1;i++){
-            cnt += singleManhattan(board.get(i),(i+1)/N,(i+1)%N);
+        for(i=0;i<N*N;i++){
+            if(board.get(i)==0){
+                continue;
+            }
+            cnt += singleManhattan(board.get(i)-1,(i)/N,(i)%N);
         }
         //System.out.println("total " + cnt);
         return cnt;
@@ -104,8 +108,8 @@ public class Board implements WorldState {
 
     private int singleManhattan(int expected, int expectedRow, int expectedCol){
         int row = expected/N;
-        int col = expected % N;
-        //System.out.println("col " + col + " row " + row + " expected row " + expectedRow + " excpectd Col "+ expectedCol);
+        int col = expected % (N);
+        //System.out.println(expected +"  col " + col + " row " + row + " expected row " + expectedRow + " excpectd Col "+ expectedCol);
         return Math.abs(col - expectedCol) + Math.abs(row - expectedRow);
     }
 
@@ -113,6 +117,12 @@ public class Board implements WorldState {
         return manhattan();
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(board, BLANK, N);
+    }
+
+    @Override
     public boolean equals(Object y){
         if(this==y){
             return true;

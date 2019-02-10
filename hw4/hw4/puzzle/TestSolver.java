@@ -107,7 +107,7 @@ public class TestSolver {
         }
     }
 
-    @Test(timeout = 40000)
+    @Test(timeout = 400000)
     public void test3x3BoardPuzzles() {
         for (int i = 0; i <= 30; i += 1) {
             String pnum = String.format("%02d", i);
@@ -120,7 +120,7 @@ public class TestSolver {
         }
     }
 
-    @Test(timeout = 20000)
+    @Test(timeout = 200000)
     public void test4x4BoardPuzzles() {
         for (int i = 0; i <= 30; i += 1) {
             String pnum = String.format("%02d", i);
@@ -133,7 +133,7 @@ public class TestSolver {
         }
     }
 
-    @Test(timeout = 20000)
+    @Test(timeout = 200000)
     public void testVariousPuzzles() {
         for (int i = 0; i <= 31; i += 1) {
             String pnum = String.format("%02d", i);
@@ -144,5 +144,16 @@ public class TestSolver {
             Solver s = new Solver(b);
             assertEquals("Wrong number of moves on " + puzzleName, bps.numMoves, s.moves());
         }
+    }
+
+    @Test
+    public void testManhattan(){
+        int [][] tiles = new int[2][2];
+        tiles[0][0] = 1;
+        tiles[0][1] = 2;
+        tiles[1][0] = 0;
+        tiles[1][1] = 3;
+        Board board = new Board(tiles);
+        assertEquals(board.manhattan(),1);
     }
 }
