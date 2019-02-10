@@ -96,14 +96,16 @@ public class Board implements WorldState {
     public int manhattan(){
         int i,cnt=0;
         for(i=0;i<N*N-1;i++){
-            cnt += singleManhattan(board.get(i),i/N,i - (i*N));
+            cnt += singleManhattan(board.get(i),(i+1)/N,(i+1)%N);
         }
+        //System.out.println("total " + cnt);
         return cnt;
     }
 
     private int singleManhattan(int expected, int expectedRow, int expectedCol){
-        int col = expected/N;
-        int row = expected - (col*N);
+        int row = expected/N;
+        int col = expected % N;
+        //System.out.println("col " + col + " row " + row + " expected row " + expectedRow + " excpectd Col "+ expectedCol);
         return Math.abs(col - expectedCol) + Math.abs(row - expectedRow);
     }
 
